@@ -55,6 +55,11 @@ function App() {
     setTurn(TURNS.X);
     setWinner(null);
   }
+
+  const checkEndGame = (newBoard) => {
+    return newBoard.every((square) => square !== null)
+  }
+
   const updateBoard = (index) => {
     // no actualizamos esta posicion
     // si ya hay piezas ahi o si ya hay un ganador
@@ -70,12 +75,16 @@ function App() {
     const newWinner = checkWinner(newBoard)
     if (newWinner) {
       setWinner(newWinner)
+    } else if (checkEndGame(newBoard)){
+      setWinner(false)
+
     }
   };
 
   return (
     <main className="board">
-      <h1>Gato Thor Gordo</h1>
+      <h1>Gato</h1>
+      <button onClick={resetGame}>Reset del juego</button>
       <section className="game">
         {board.map((_, index) => {
           return (
