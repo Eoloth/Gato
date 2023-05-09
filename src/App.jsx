@@ -1,11 +1,10 @@
 import { useState } from "react";
-import "./App.css";
 import confetti from "canvas-confetti";
-import Square from "./components/Square";
-import { TURNS } from "./constants";
-import { checkWinner } from "./logic/board.js";
-import { WinnerModal } from "./components/WinnerModal";
-import { checkEndGame } from "./logic/board.js";
+import { Square } from "./components/Square.jsx";
+import { TURNS } from "./constants.js";
+import { checkWinnerFrom, checkEndGame } from "./logic/board.js";
+import { WinnerModal } from "./components/WinnerModal.jsx";
+
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -31,7 +30,7 @@ function App() {
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
 
-    const newWinner = checkWinner(newBoard);
+    const newWinner = checkWinnerFrom(newBoard);
     if (newWinner) {
       confetti();
       setWinner(newWinner);

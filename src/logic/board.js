@@ -1,6 +1,6 @@
 import { WINNER_COMBOS } from "../constants.js";
 
-export const checkWinner = (boardToCheck) => {
+export const checkWinnerFrom = (boardToCheck) => {
   for (const combo of WINNER_COMBOS) {
     const [a, b, c] = combo;
     if (
