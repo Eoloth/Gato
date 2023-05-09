@@ -4,7 +4,8 @@ import confetti from "canvas-confetti";
 import Square from "./components/Square";
 import { TURNS } from "./constants";
 import { checkWinner } from "./logic/board.js";
-import {WinnerModal} from "./components/WinnerModal";
+import { WinnerModal } from "./components/WinnerModal";
+import { checkEndGame } from "./logic/board.js";
 
 function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
@@ -12,17 +13,11 @@ function App() {
   const [turn, setTurn] = useState(TURNS.X);
   const [winner, setWinner] = useState(null);
 
-
-
   const resetGame = () => {
     setBoard(Array(9).fill(null));
     setTurn(TURNS.X);
     setWinner(null);
-  }
-
-  const checkEndGame = (newBoard) => {
-    return newBoard.every((square) => square !== null)
-  }
+  };
 
   const updateBoard = (index) => {
     // no actualizamos esta posicion
@@ -36,13 +31,12 @@ function App() {
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     setTurn(newTurn);
 
-    const newWinner = checkWinner(newBoard)
+    const newWinner = checkWinner(newBoard);
     if (newWinner) {
       confetti();
-      setWinner(newWinner)
-    } else if (checkEndGame(newBoard)){
-      setWinner(false)
-
+      setWinner(newWinner);
+    } else if (checkEndGame(newBoard)) {
+      setWinner(false);
     }
   };
 
@@ -56,16 +50,15 @@ function App() {
             <Square key={index} index={index} updateBoard={updateBoard}>
               {board[index]}
             </Square>
-          )
-        })
-        }
+          );
+        })}
       </section>
 
       <section className="turn">
         <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
-      <WinnerModal resetGame={resetGame} winner ={winner} />
+      <WinnerModal resetGame={resetGame} winner={winner} />
     </main>
   );
 }
